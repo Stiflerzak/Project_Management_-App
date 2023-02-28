@@ -2,7 +2,7 @@
 function App() {
   return (
     <div>
-      <p>gfv vxvvv</p>
+      APP
     </div>
   );
 }
