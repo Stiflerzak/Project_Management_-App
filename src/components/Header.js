@@ -3,7 +3,7 @@ import { styled } from '@mui/material/styles';
 
 const Header = () => {
   const StyledAppBar = styled(AppBar)({
-    backgroundColor: '#333',
+    backgroundColor: '#B8860B',
     color: '#fff',
   });
 
