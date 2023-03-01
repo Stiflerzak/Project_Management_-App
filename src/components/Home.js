@@ -1,5 +1,6 @@
 import React from 'react';
 import AddProjectForm from './AddProjectForm';
+import ProjectsList from './ProjectList';
 import { Box, Card, CardContent, Grid, Typography } from '@mui/material';
 
 const Home = () => {
@@ -23,7 +24,7 @@ const Home = () => {
           <Card>
             <CardContent>
               <Typography variant="h5" component="h2">
-                All Projects
+                <ProjectsList/>
               </Typography>
               {/* List of all projects and their due dates */}
             </CardContent>
