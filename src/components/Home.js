@@ -1,6 +1,7 @@
 import React from 'react';
 import AddProjectForm from './AddProjectForm';
 import ProjectsList from './ProjectList';
+import UsersList from './UsersList';
 import { Box, Card, CardContent, Grid, Typography } from '@mui/material';
 
 const Home = () => {
@@ -36,7 +37,7 @@ const Home = () => {
           <Card>
             <CardContent>
               <Typography variant="h5" component="h2">
-                All Logged In Users
+                <UsersList/>
               </Typography>
               {/* List of all logged in users */}
             </CardContent>
