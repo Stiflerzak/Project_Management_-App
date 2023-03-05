@@ -9,6 +9,7 @@ const Home = () => {
     <Box sx={{ flexGrow: 1 }}>
       <Grid container spacing={3}>
         {/* Left column: Add Project dashboard */}
+        
         <Grid item xs={12} sm={6} md={4}>
           <Card>
             <CardContent>
