@@ -1,96 +1,61 @@
-import { useState } from 'react';
-import { Box, TextField, Button, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
+import React, { useState, useEffect, useRef } from "react";
 
-const AddProjectForm = () => {
-  const [projectName, setProjectName] = useState('');
-  const [projectCategory, setProjectCategory] = useState('');
-  const [projectDetails, setProjectDetails] = useState('');
-  const [assignedTo, setAssignedTo] = useState('');
-  const [dueDate, setDueDate] = useState('');
+const ProjectList = () => {
+  const [categories, setCategories] = useState([]);
+  const titleRef = useRef();
+  const descriptionRef = useRef();
+  const categoryRef = useRef();
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    // Here you can handle the submission of the form and add the new project
-    // to the list of projects in your app's state
-    const newProject = {
-  name: projectName,
-  category: projectCategory,
-  details: projectDetails,
-  assignedTo: assignedTo,
-  dueDate: dueDate
-};
+  useEffect(() => {
+    fetch("http://localhost:8000/categories")
+      .then((response) => response.json())
+      .then((data) => setCategories(data));
+  }, []);
 
-fetch('http://localhost:8000/project', {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json'
-  },
-  body: JSON.stringify(newProject)
-})
-  .then(response => response.json())
-  .then(data => console.log(data))
-  .catch(error => console.log(error));
-  
-setProjectName('');
-setProjectCategory('');
-setProjectDetails('');
-setAssignedTo('');
-setDueDate('');
-
+  const submitformhandler = (e) => {
+    e.preventDefault();
+    const formData = {
+      title: titleRef.current.value,
+      description: descriptionRef.current.value,
+      category_id: categoryRef.current.value,
+    };
+    fetch("http://localhost:8000/project", {
+      method: "POST",
+      body: JSON.stringify(formData),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => console.log(data))
+      .catch((error) => console.error(error));
   };
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', p: 2 }}>
-      <form onSubmit={handleSubmit}>
-        <TextField
-          label="Project Name"
-          value={projectName}
-          onChange={(event) => setProjectName(event.target.value)}
-          required
-          sx={{ my: 1, width: '100%' }}
-        />
-        <FormControl sx={{ my: 1, width: '100%' }} required>
-          <InputLabel id="project-category-label">Project Category</InputLabel>
-          <Select
-            labelId="project-category-label"
-            value={projectCategory}
-            onChange={(event) => setProjectCategory(event.target.value)}
-          >
-            <MenuItem value="Category A">FreeLance</MenuItem>
-            <MenuItem value="Category B">Proffesional</MenuItem>
-            <MenuItem value="Category C">Lowcome</MenuItem>
-          </Select>
-        </FormControl>
-        <TextField
-          label="Project Details"
-          value={projectDetails}
-          onChange={(event) => setProjectDetails(event.target.value)}
-          required
-          multiline
-          rows={4}
-          sx={{ my: 1, width: '100%' }}
-        />
-        <TextField
-          label="Assigned To"
-          value={assignedTo}
-          onChange={(event) => setAssignedTo(event.target.value)}
-          required
-          sx={{ my: 1, width: '100%' }}
-        />
-        <TextField
-          label="Due Date"
-          type="date"
-          value={dueDate}
-          onChange={(event) => setDueDate(event.target.value)}
-          required
-          sx={{ my: 1, width: '100%' }}
-        />
-        <Button type="submit" variant="contained" sx={{ my: 1 }}>
-          Add Project
-        </Button>
-      </form>
-    </Box>
+    <form onSubmit={submitformhandler}>
+      <input
+        type="text"
+        name="title"
+        placeholder="add a project"
+        ref={titleRef}
+      />
+      <br />
+      <textarea
+        name="description"
+        id="description"
+        cols="30"
+        rows="10"
+        ref={descriptionRef}
+      ></textarea>
+      <br/>
+      <select name="category_id" id="category_id" ref={categoryRef}>
+        {categories.map((category) => (
+          <option key={category.id}> {category.name}</option>
+        ))}
+      </select>
+      <button>Submit</button>
+    </form>
   );
 };
 
-export default AddProjectForm;
+export default ProjectList;

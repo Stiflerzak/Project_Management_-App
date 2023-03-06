@@ -7,9 +7,13 @@ const ProjectsList = () => {
 
   useEffect(() => {
     // fetch projects data from server
-    fetch('https://api.npoint.io/019402c531ba8aacc92d')
+    fetch('http://localhost:8000/projects')
       .then((response) => response.json())
-      .then((data) => setProjects(data))
+      .then((data) => {
+        // Sort projects in descending order based on their created_at property
+        const sortedProjects = data.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+        setProjects(sortedProjects);
+      })
       .catch((error) => console.error(error));
   }, []);
 
