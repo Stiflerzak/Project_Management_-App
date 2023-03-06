@@ -12,6 +12,31 @@ const AddProjectForm = () => {
     event.preventDefault();
     // Here you can handle the submission of the form and add the new project
     // to the list of projects in your app's state
+    const newProject = {
+  name: projectName,
+  category: projectCategory,
+  details: projectDetails,
+  assignedTo: assignedTo,
+  dueDate: dueDate
+};
+
+fetch('http://localhost:8000/project', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify(newProject)
+})
+  .then(response => response.json())
+  .then(data => console.log(data))
+  .catch(error => console.log(error));
+  
+setProjectName('');
+setProjectCategory('');
+setProjectDetails('');
+setAssignedTo('');
+setDueDate('');
+
   };
 
   return (

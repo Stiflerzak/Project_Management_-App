@@ -7,7 +7,7 @@ const ProjectsList = () => {
 
   useEffect(() => {
     // fetch projects data from server
-    fetch('http://localhost:8000/projects')
+    fetch('https://api.npoint.io/019402c531ba8aacc92d')
       .then((response) => response.json())
       .then((data) => setProjects(data))
       .catch((error) => console.error(error));
