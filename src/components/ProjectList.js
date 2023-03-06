@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
-import { Card, CardContent, List, ListItem, Typography } from '@mui/material';
+import { Card, CardContent, IconButton, List, ListItem, Typography } from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 
 const ProjectsList = () => {
   const [projects, setProjects] = useState([]);
@@ -29,6 +31,17 @@ const ProjectsList = () => {
     }
   };
 
+  const handleDelete = (id) => {
+    fetch(`http://localhost:8000/projects/${id}`, {
+      method: 'DELETE',
+    })
+      .then(() => {
+        // remove the deleted project from the list
+        setProjects(projects.filter((project) => project.id !== id));
+      })
+      .catch((error) => console.error(error));
+  };
+
   return (
     <div>
       <Typography variant="h5" component="h2" style={{ marginBottom: '16px' }}>
@@ -55,6 +68,14 @@ const ProjectsList = () => {
                   <strong>Created at: </strong>{new Date(project.created_at).toLocaleString()}
                 </Typography>
               </CardContent>
+              <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '8px' }}>
+                <IconButton onClick={() => handleDelete(project.id)}>
+                  <DeleteIcon />
+                </IconButton>
+                <IconButton>
+                  <EditIcon />
+                </IconButton>
+              </div>
             </Card>
           </ListItem>
         ))}
@@ -68,3 +89,4 @@ const ProjectsList = () => {
 };
 
 export default ProjectsList;
+
