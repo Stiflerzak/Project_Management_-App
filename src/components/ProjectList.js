@@ -9,7 +9,7 @@ const ProjectsList = () => {
 
   useEffect(() => {
     // fetch projects data from server
-    fetch('http://localhost:8000/projects')
+    fetch('https://api.npoint.io/960c0c6e35de89535653')
       .then((response) => response.json())
       .then((data) => {
         // Sort projects in descending order based on their created_at property
@@ -32,7 +32,7 @@ const ProjectsList = () => {
   };
 
   const handleDelete = (id) => {
-    fetch(`http://localhost:8000/projects/${id}`, {
+    fetch(`https://api.npoint.io/960c0c6e35de89535653/${id}`, {
       method: 'DELETE',
     })
       .then(() => {
